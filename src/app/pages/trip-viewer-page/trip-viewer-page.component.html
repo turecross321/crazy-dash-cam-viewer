@@ -17,7 +17,7 @@
                 <a [href]="apiClient.getVideoDownloadUrl(trip.directoryName, video.label)"><fa-icon [icon]="faDownload"></fa-icon></a>
               </span>
           </div>
-          <video [id]="video.label" #videoElement class="rounded-lg mx-auto" width="480" height="320">
+          <video [id]="video.label" #videoElement class="rounded-lg mx-auto lg:h-[300px]">
             <source
               [src]="apiClient.getVideoStreamUrl(trip.directoryName, video.label)"
               type="video/mp4"

@@ -100,6 +100,9 @@ export class TripViewerPageComponent {
   }
 
   startPlaying() {
+    if (this.current == this.tripLength)
+      this.setCurrentFromMs(0);
+
     this.playing = true;
     this.startUpdatingCurrent();
 
@@ -130,15 +133,20 @@ export class TripViewerPageComponent {
   throttlePosition: NumberWithTimestamp | undefined;
 
   getAppropriateEvent<T extends HasTimestamp>(date: Date, events: T[]): T | undefined {
+    let last = undefined;
+
     for (let event of events) {
       const timestamp = new Date(event.date);
 
       if (timestamp <= date) {
-        return event;
+        last = event;
+      }
+      else {
+        break;
       }
     }
 
-    return undefined;
+    return last;
   }
 
   syncEvents(date: Date) {
