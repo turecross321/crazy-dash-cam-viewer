@@ -16,11 +16,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TripResponse } from '../../models/trip-response';
 import {HasTimestamp, Location, NumberWithTimestamp, TripEventsResponse} from "../../models/trip-events-response";
 import {TripGaugeComponent} from "../../components/trip-gauge/trip-gauge.component";
+import {TripMapComponent} from "../../components/trip-map/trip-map.component";
 
 @Component({
   selector: 'app-trip-viewer-page',
   standalone: true,
-  imports: [FontAwesomeModule, TripGaugeComponent],
+  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent],
   templateUrl: './trip-viewer-page.component.html',
 })
 export class TripViewerPageComponent {
