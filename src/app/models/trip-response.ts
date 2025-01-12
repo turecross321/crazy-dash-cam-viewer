@@ -5,5 +5,6 @@ export interface TripResponse {
   startDate: Date;
   endDate: Date;
   vehicleName: Date;
+  allVideosStartedDate: Date;
   videos: TripVideoResponse[]
 }

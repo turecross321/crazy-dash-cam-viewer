@@ -8,7 +8,7 @@ import {
   faPlay,
   faRotate,
   faSpinner,
-  faStopwatch, faTachometer, faTemperature0,
+  faTachometer, faTemperature0,
   faVideoCamera
 } from '@fortawesome/free-solid-svg-icons';
 import { ApiClientService } from '../../services/api-client.service';
@@ -44,11 +44,11 @@ export class TripViewerPageComponent {
       apiClient.getTrip(directoryName!)
         .subscribe((response) => {
           response.startDate = new Date(response.startDate);
+          response.allVideosStartedDate = new Date(response.allVideosStartedDate);
           response.endDate = new Date(response.endDate);
 
           this.trip = response;
-          this.setCurrentFromMs(0);
-          this.tripLength = this.trip.endDate.getTime() - this.trip.startDate.getTime();
+          this.tripLength = this.trip.endDate.getTime() - this.playbackStartDate().getTime();
         });
 
       apiClient.connectToTripEvents(directoryName!);
@@ -58,12 +58,16 @@ export class TripViewerPageComponent {
     });
   }
 
+  playbackStartDate(): Date {
+    return this.trip!.allVideosStartedDate;
+  }
+
   getMsFromDate(date: Date) {
-    return date.getTime() - this.trip!.startDate.getTime();
+    return date.getTime() - this.playbackStartDate().getTime();
   }
 
   getDateFromMs(ms : number): Date {
-    const time = this.trip!.startDate.getTime() + ms;
+    const time = this.playbackStartDate().getTime() + ms;
     const date = new Date();
     date.setTime(time);
     return date;
@@ -88,7 +92,7 @@ export class TripViewerPageComponent {
     // todo: don't just get all the things at the same time.
 
     if (this.events == null)
-      this.apiClient.sendTripEventRequest(this.trip!.startDate, this.trip!.endDate);
+      this.apiClient.sendTripEventRequest(this.playbackStartDate(), this.trip!.endDate);
     this.current = ms;
 
     this.syncEvents(newCurrentDate);
