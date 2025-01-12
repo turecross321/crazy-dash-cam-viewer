@@ -14,12 +14,12 @@
               </span>
 
             <span class="inline-flex gap-2 items-center">
-                <a [href]="httpApiClient.getVideoDownloadUrl(trip.directoryName, video.label)"><fa-icon [icon]="faDownload"></fa-icon></a>
+                <a [href]="apiClient.getVideoDownloadUrl(trip.directoryName, video.label)"><fa-icon [icon]="faDownload"></fa-icon></a>
               </span>
           </div>
           <video [id]="video.label" #videoElement class="rounded-lg mx-auto" width="480" height="320">
             <source
-              [src]="httpApiClient.getVideoStreamUrl(trip.directoryName, video.label)"
+              [src]="apiClient.getVideoStreamUrl(trip.directoryName, video.label)"
               type="video/mp4"
             />
             Please update your browser.
@@ -35,26 +35,19 @@
       <span>{{formatMilliseconds(current)}}/{{formatMilliseconds(tripLength)}}</span>
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
-      <div class="bg-container p-4 rounded-lg text-center">
-        <fa-icon [icon]="faGaugeHigh"></fa-icon>
-        <p>0 km/h</p>
-      </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2">
 
-      <div class="bg-container p-4 rounded-lg text-center">
-        <fa-icon [icon]="faRotate"></fa-icon>
-        <p>0 RPM</p>
-      </div>
+      <app-trip-gauge [icon]="faGaugeHigh" [value]="speed?.value" unit="km/h" label="Speed"></app-trip-gauge>
+      <app-trip-gauge [icon]="faTachometer" [value]="rpm?.value" unit="RPM" label="Engine Speed"></app-trip-gauge>
+      <app-trip-gauge [icon]="faTachometer" [value]="engineLoad?.value" unit="%" label="Load"></app-trip-gauge>
+      <app-trip-gauge [icon]="faTachometer" [value]="throttlePosition?.value" unit="%" label="Throttle"></app-trip-gauge>
+      <app-trip-gauge [icon]="faGasPump" [value]="fuelLevel?.value" unit="%" label="Fuel Level"></app-trip-gauge>
 
-      <div class="bg-container p-4 rounded-lg text-center">
-        <span><fa-icon [icon]="faTemperature0"></fa-icon> Coolant</span>
-        <p>- °C</p>
-      </div>
-
-      <div class="bg-container p-4 rounded-lg text-center">
-        <span><fa-icon [icon]="faTemperature0"></fa-icon> Oil</span>
-        <p>- °C</p>
-      </div>
+      <app-trip-gauge [icon]="faClock" [value]="getDateFromMs(current).toLocaleTimeString()" unit="" label="Time"></app-trip-gauge>
+      <app-trip-gauge [icon]="faTemperature0" [value]="ambientAirTemp?.value" unit="°C" label="Outside"></app-trip-gauge>
+      <app-trip-gauge [icon]="faTemperature0" [value]="coolantTemp?.value" unit="°C" label="Coolant"></app-trip-gauge>
+      <app-trip-gauge [icon]="faTemperature0" [value]="oilTemp?.value" unit="°C" label="Oil"></app-trip-gauge>
+      <app-trip-gauge [icon]="faTemperature0" [value]="intakeTemp?.value" unit="°C" label="Intake"></app-trip-gauge>
 
     </div>
   }

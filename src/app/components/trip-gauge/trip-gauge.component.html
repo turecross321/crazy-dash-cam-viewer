@@ -1,0 +1,10 @@
+<div class="bg-container p-4 rounded-lg text-center flex flex-col items-center">
+  <div class="flex gap-1 items-center">
+    <fa-icon [icon]="icon"></fa-icon>
+    <p>{{label}}</p>
+  </div>
+  <div class="flex gap-1 items-center">
+    <span>{{value ?? '-'}}</span>
+    <span>{{unit}}</span>
+  </div>
+</div>

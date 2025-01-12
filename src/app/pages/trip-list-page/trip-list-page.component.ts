@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterLink} from '@angular/router';
-import { HttpApiClientService } from '../../services/http-api-client.service';
+import { ApiClientService } from '../../services/api-client.service';
 import { TripResponse } from '../../models/trip-response';
 
 @Component({
@@ -12,7 +12,7 @@ import { TripResponse } from '../../models/trip-response';
 export class TripListPageComponent {
   trips: TripResponse[] | null = null;
 
-  constructor(private httpApiClient: HttpApiClientService) {
+  constructor(private httpApiClient: ApiClientService) {
     httpApiClient.getTrips().subscribe((response) => {
       this.trips = response.items;
     })
