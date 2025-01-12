@@ -1,7 +1,8 @@
 export interface TripEventsResponse {
   amb_air_temp: NumberWithTimestamp[];
   cool_temp: NumberWithTimestamp[];
-  eng_load: NumberWithTimestamp[];
+  calc_load: NumberWithTimestamp[];
+  abs_load: NumberWithTimestamp[];
   fuel_lvl: NumberWithTimestamp[];
   in_temp: NumberWithTimestamp[];
   loc: Location[];
@@ -9,6 +10,7 @@ export interface TripEventsResponse {
   rpm: NumberWithTimestamp[];
   speed: NumberWithTimestamp[];
   thr_pos: NumberWithTimestamp[];
+  rel_thr_pos: NumberWithTimestamp[];
   from: Date;
   to: Date;
 }

@@ -1,11 +1,13 @@
 import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
+  faBars,
+  faCar,
   faClock,
-  faDownload, faGasPump,
-  faGaugeHigh,
+  faDownload, faGamepad, faGasPump,
+  faGaugeHigh, faGears,
   faPause,
-  faPlay,
+  faPlay, faRoad,
   faRotate,
   faSpinner,
   faTachometer, faTemperature0,
@@ -57,6 +59,15 @@ export class TripViewerPageComponent {
         this.events = response;
       });
     });
+  }
+
+  formatDate(date: Date): string {
+    return new Intl.DateTimeFormat("en-US", {
+      weekday: "long",  // Full day name (e.g., "Monday")
+      month: "long",    // Full month name (e.g., "April")
+      day: "numeric",   // Numeric day (e.g., "13")
+      year: "numeric",  // Full year (e.g., "2020")
+    }).format(date);
   }
 
   playbackStartDate(): Date {
@@ -128,7 +139,8 @@ export class TripViewerPageComponent {
 
   ambientAirTemp : NumberWithTimestamp | undefined;
   coolantTemp: NumberWithTimestamp | undefined;
-  engineLoad: NumberWithTimestamp | undefined;
+  calculatedLoad: NumberWithTimestamp | undefined;
+  absoluteLoad: NumberWithTimestamp | undefined;
   fuelLevel: NumberWithTimestamp | undefined;
   intakeTemp: NumberWithTimestamp | undefined;
   location: Location | undefined;
@@ -136,6 +148,7 @@ export class TripViewerPageComponent {
   rpm: NumberWithTimestamp | undefined;
   speed: NumberWithTimestamp | undefined;
   throttlePosition: NumberWithTimestamp | undefined;
+  relativeThrottlePosition: NumberWithTimestamp | undefined;
 
   getAppropriateEvent<T extends HasTimestamp>(date: Date, events: T[]): T | undefined {
     let last = undefined;
@@ -155,10 +168,18 @@ export class TripViewerPageComponent {
   }
 
   syncEvents(date: Date) {
-    this.speed = undefined;
-    this.rpm = undefined;
-    this.coolantTemp = undefined;
-    this.oilTemp = undefined;
+    this.ambientAirTemp  = undefined
+    this.coolantTemp = undefined
+    this.calculatedLoad = undefined
+    this.absoluteLoad = undefined
+    this.fuelLevel = undefined
+    this.intakeTemp = undefined
+    this.location = undefined
+    this.oilTemp = undefined
+    this.rpm = undefined
+    this.speed = undefined
+    this.throttlePosition = undefined
+    this.relativeThrottlePosition = undefined
 
     if (!this.events) {
       return;
@@ -166,14 +187,16 @@ export class TripViewerPageComponent {
 
     this.ambientAirTemp = this.getAppropriateEvent(date, this.events.amb_air_temp);
     this.coolantTemp = this.getAppropriateEvent(date, this.events.cool_temp);
-    this.engineLoad = this.getAppropriateEvent(date, this.events.eng_load);
+    this.calculatedLoad = this.getAppropriateEvent(date, this.events.calc_load);
+    this.absoluteLoad = this.getAppropriateEvent(date, this.events.abs_load);
     this.fuelLevel = this.getAppropriateEvent(date, this.events.fuel_lvl);
     this.intakeTemp = this.getAppropriateEvent(date, this.events.in_temp);
     this.location = this.getAppropriateEvent(date, this.events.loc);
     this.oilTemp = this.getAppropriateEvent(date, this.events.oil_temp);
     this.rpm = this.getAppropriateEvent(date, this.events.rpm);
     this.speed = this.getAppropriateEvent(date, this.events.speed);
-    this.throttlePosition = this.getAppropriateEvent(date, this.events.thr_pos);
+    this.throttlePosition = this.getAppropriateEvent(date, this.events.rel_thr_pos);
+    this.relativeThrottlePosition = this.getAppropriateEvent(date, this.events.rel_thr_pos);
   }
 
   stopPlaying() {
@@ -225,4 +248,9 @@ export class TripViewerPageComponent {
   protected readonly faTachometer = faTachometer;
   protected readonly faGasPump = faGasPump;
   protected readonly faClock = faClock;
+  protected readonly faCar = faCar;
+  protected readonly faRoad = faRoad;
+  protected readonly faBars = faBars;
+  protected readonly faGamepad = faGamepad;
+  protected readonly faGears = faGears;
 }
