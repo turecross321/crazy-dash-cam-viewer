@@ -21,7 +21,7 @@
                 <a [href]="apiClient.getVideoDownloadUrl(trip.directoryName, video.label)"><fa-icon [icon]="faDownload"></fa-icon></a>
               </span>
           </div>
-          <video [id]="video.label" #videoElement class="rounded-lg mx-auto lg:h-[300px]" (loadeddata)="syncVideos()">
+          <video [id]="video.label" controls #videoElement class="rounded-lg mx-auto lg:h-[300px]" (loadeddata)="syncVideos()">
             <source
               [src]="apiClient.getVideoStreamUrl(trip.directoryName, video.label)"
               type="video/mp4"
@@ -34,8 +34,8 @@
     </div>
 
     <div class="bg-container rounded-lg py-2 px-4 flex gap-2 items-center">
-      <button><fa-icon [icon]="playing ? faPause : faPlay" (click)="togglePlay()" size="lg" [fixedWidth]="true"></fa-icon></button>
-      <input type="range" class="w-full -mb-[4.5px] -mt-[4.5px]" [min]="0" [max]="tripLength" #seek (input)="onSeekbarChange(seek.value)" [value]="current">
+      <button (click)="togglePlay()"><fa-icon [icon]="playing ? faPause : faPlay"  size="lg" [fixedWidth]="true"></fa-icon></button>
+      <input type="range" class="w-full -mb-[4.5px] -mt-[4.5px]" [min]="0" [max]="tripLength" #seekbar (input)="seek(parseInt(seekbar.value))" [value]="current">
       <span>{{formatMilliseconds(current)}}/{{formatMilliseconds(tripLength)}}</span>
     </div>
 

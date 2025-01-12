@@ -1,4 +1,4 @@
-import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
+import {Component, ElementRef, HostListener, QueryList, ViewChildren} from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faBars,
@@ -25,10 +25,33 @@ import {TripMapComponent} from "../../components/trip-map/trip-map.component";
   standalone: true,
   imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent],
   templateUrl: './trip-viewer-page.component.html',
+  styleUrl: './trip-viewer-page.component.css'
 })
 export class TripViewerPageComponent {
   faSpinner = faSpinner;
   trip: TripResponse | null = null;
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (document.fullscreenElement) {
+      event.stopPropagation();
+    }
+
+    switch(event.code) {
+      case 'Space': // Spacebar
+        event.preventDefault();
+        this.togglePlay();
+        break;
+      case 'ArrowLeft': // Left arrow
+        event.preventDefault();
+        this.seek(this.current - 5000); // Skip back 5 seconds
+        break;
+      case 'ArrowRight': // Right arrow;
+        event.preventDefault();
+        this.seek(this.current + 5000); // Skip forward 5 seconds
+        break;
+    }
+  }
 
   eventTimeSpanMs = 60 * 1000; // 1 minute
   tripLength: number = 0;
@@ -56,7 +79,9 @@ export class TripViewerPageComponent {
 
       apiClient.connectToTripEvents(directoryName!);
       this.apiClient.getTripEvents().subscribe((response) => {
+        console.log(response);
         this.events = response;
+        this.apiClient.closeTripEvents();
       });
     });
   }
@@ -99,15 +124,24 @@ export class TripViewerPageComponent {
   }
 
 
-  setCurrentFromMs(ms: number) {
+  setCurrent(ms: number) {
     const newCurrentDate = this.getDateFromMs(ms);
     // todo: don't just get all the things at the same time.
 
     if (this.events == null)
       this.apiClient.sendTripEventRequest(this.playbackStartDate(), this.trip!.endDate);
-    this.current = ms;
+    this.current = Math.min(Math.max(ms, 0), this.tripLength);
+
+    if (this.current >= this.tripLength) {
+      this.stopPlaying();
+    }
 
     this.syncEvents(newCurrentDate);
+  }
+
+  seek(ms: number) {
+    this.setCurrent(ms);
+    this.syncVideos();
   }
 
   togglePlay() {
@@ -116,8 +150,8 @@ export class TripViewerPageComponent {
   }
 
   startPlaying() {
-    if (this.current == this.tripLength)
-      this.setCurrentFromMs(0);
+    if (this.current >= this.tripLength)
+      this.setCurrent(0);
 
     this.playing = true;
     this.startUpdatingCurrent();
@@ -215,10 +249,10 @@ export class TripViewerPageComponent {
     this.intervalId = setInterval(() => {
       if (!this.trip) return;
 
-      this.setCurrentFromMs(this.current + this.updateInterval); // Increment by 100ms
+      this.setCurrent(this.current + this.updateInterval); // Increment by 100ms
 
       if (this.current > this.tripLength) {
-        this.setCurrentFromMs(this.tripLength); // Cap at the trip length
+        this.setCurrent(this.tripLength); // Cap at the trip length
         this.stopPlaying(); // Stop playing when the trip ends
       }
 
@@ -230,12 +264,6 @@ export class TripViewerPageComponent {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
-  }
-
-  onSeekbarChange(value: any) {
-    this.stopPlaying();
-    this.setCurrentFromMs(parseInt(value));
-    this.syncVideos();
   }
 
   protected readonly faVideoCamera = faVideoCamera;
@@ -253,4 +281,5 @@ export class TripViewerPageComponent {
   protected readonly faBars = faBars;
   protected readonly faGamepad = faGamepad;
   protected readonly faGears = faGears;
+  protected readonly parseInt = parseInt;
 }
