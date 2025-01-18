@@ -45,11 +45,8 @@
       <app-trip-gauge [icon]="faTachometer" [value]="rpm?.value" unit="RPM" label="Engine Speed"></app-trip-gauge>
       <app-trip-gauge [icon]="faTemperature0" [value]="coolantTemp?.value" unit="°C" label="Coolant"></app-trip-gauge>
       <app-trip-gauge [icon]="faTemperature0" [value]="oilTemp?.value" unit="°C" label="Oil"></app-trip-gauge>
-      <app-trip-gauge [icon]="faGamepad" [value]="relativeThrottlePosition?.value" unit="%" label="Relative Throttle"></app-trip-gauge>
-      <app-trip-gauge [icon]="faGamepad" [value]="throttlePosition?.value" unit="%" label="Absolute Throttle"></app-trip-gauge>
-      <app-trip-gauge [icon]="faGears" [value]="calculatedLoad?.value" unit="%" label="Calculated Load"></app-trip-gauge>
-      <app-trip-gauge [icon]="faGears" [value]="absoluteLoad?.value" unit="%" label="Absolute Load"></app-trip-gauge>
-      <app-trip-gauge [icon]="faTemperature0" [value]="intakeTemp?.value" unit="°C" label="Intake"></app-trip-gauge>
+
+      <app-trip-gauge [icon]="faGamepad" [value]="throttlePosition?.value" unit="%" label="Throttle"></app-trip-gauge>
       <app-trip-gauge [icon]="faTemperature0" [value]="ambientAirTemp?.value" unit="°C" label="Outside"></app-trip-gauge>
       <app-trip-gauge [icon]="faGasPump" [value]="fuelLevel?.value" unit="%" label="Fuel Level"></app-trip-gauge>
       <app-trip-gauge [icon]="faClock" [value]="getDateFromMs(current).toLocaleTimeString()" unit="" label="Time"></app-trip-gauge>

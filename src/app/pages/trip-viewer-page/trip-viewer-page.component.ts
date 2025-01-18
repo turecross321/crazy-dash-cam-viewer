@@ -172,16 +172,12 @@ export class TripViewerPageComponent {
 
   ambientAirTemp : NumberWithTimestamp | undefined;
   coolantTemp: NumberWithTimestamp | undefined;
-  calculatedLoad: NumberWithTimestamp | undefined;
-  absoluteLoad: NumberWithTimestamp | undefined;
   fuelLevel: NumberWithTimestamp | undefined;
-  intakeTemp: NumberWithTimestamp | undefined;
   location: Location | undefined;
   oilTemp: NumberWithTimestamp | undefined;
   rpm: NumberWithTimestamp | undefined;
   speed: NumberWithTimestamp | undefined;
   throttlePosition: NumberWithTimestamp | undefined;
-  relativeThrottlePosition: NumberWithTimestamp | undefined;
 
   getAppropriateEvent<T extends HasTimestamp>(date: Date, events: T[]): T | undefined {
     let last = undefined;
@@ -203,16 +199,12 @@ export class TripViewerPageComponent {
   syncEvents(date: Date) {
     this.ambientAirTemp  = undefined
     this.coolantTemp = undefined
-    this.calculatedLoad = undefined
-    this.absoluteLoad = undefined
     this.fuelLevel = undefined
-    this.intakeTemp = undefined
     this.location = undefined
     this.oilTemp = undefined
     this.rpm = undefined
     this.speed = undefined
     this.throttlePosition = undefined
-    this.relativeThrottlePosition = undefined
 
     if (!this.events) {
       return;
@@ -220,16 +212,12 @@ export class TripViewerPageComponent {
 
     this.ambientAirTemp = this.getAppropriateEvent(date, this.events.amb_air_temp);
     this.coolantTemp = this.getAppropriateEvent(date, this.events.cool_temp);
-    this.calculatedLoad = this.getAppropriateEvent(date, this.events.calc_load);
-    this.absoluteLoad = this.getAppropriateEvent(date, this.events.abs_load);
     this.fuelLevel = this.getAppropriateEvent(date, this.events.fuel_lvl);
-    this.intakeTemp = this.getAppropriateEvent(date, this.events.in_temp);
     this.location = this.getAppropriateEvent(date, this.events.loc);
     this.oilTemp = this.getAppropriateEvent(date, this.events.oil_temp);
     this.rpm = this.getAppropriateEvent(date, this.events.rpm);
     this.speed = this.getAppropriateEvent(date, this.events.speed);
-    this.throttlePosition = this.getAppropriateEvent(date, this.events.rel_thr_pos);
-    this.relativeThrottlePosition = this.getAppropriateEvent(date, this.events.rel_thr_pos);
+    this.throttlePosition = this.getAppropriateEvent(date, this.events.thr_pos);
   }
 
   stopPlaying() {
