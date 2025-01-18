@@ -79,7 +79,6 @@ export class TripViewerPageComponent {
 
       apiClient.connectToTripEvents(directoryName!);
       this.apiClient.getTripEvents().subscribe((response) => {
-        console.log(response);
         this.events = response;
         this.apiClient.closeTripEvents();
       });
@@ -163,7 +162,7 @@ export class TripViewerPageComponent {
   }
 
   syncVideos() {
-    this.videoElements.map((element) => {
+    this.videoElements.map((element: any) => {
       const vid = this.trip!.videos.find(v => v.label === element.nativeElement.id)!;
       const offset = this.getMsFromDate(new Date(vid.startDate));
 
@@ -241,7 +240,6 @@ export class TripViewerPageComponent {
       element.nativeElement.pause();
     });
   }
-
 
   updateInterval: number = 1000;
   private startUpdatingCurrent() {

@@ -1,6 +1,18 @@
 <main class="p-4">
   <h1 class="text-4xl mb-2">Trips</h1>
 
+  todo:
+  <ol>
+    <li>fix pagination on this shit</li>
+    <li> obd more efficent. remove unnecessary shit.</li>
+    <li>switch to mp4. mov honestly sucks</li>
+    <li>handle obd failures better</li>
+    <li>some full screen system</li>
+
+    <li>fix corners not always being round</li>
+    <li>store video start earlier</li>
+  </ol>
+
   <div class="flex flex-col gap-1">
   @for (trip of trips; track $index) {
     <a [routerLink]="'/trip/' + trip.directoryName" class="bg-container p-2 rounded h-full cursor-pointer transition-colors duration-250 hover:bg-containerHover">

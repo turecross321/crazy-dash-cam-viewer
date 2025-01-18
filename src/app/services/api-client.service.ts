@@ -35,7 +35,7 @@ export class ApiClientService {
   }
 
   getTrips(): Observable<PaginatedList<TripResponse>> {
-    return this.get("trips");
+    return this.get("trips?take=100"); // todo: fix pagination
   }
 
   connectToTripEvents(directoryName: string) {
