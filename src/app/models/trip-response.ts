@@ -1,4 +1,5 @@
 import { TripVideoResponse } from "./trip-video-response";
+import {TripHighlightResponse} from "./trip-highlight-response";
 
 export interface TripResponse {
   directoryName: string;
@@ -6,5 +7,6 @@ export interface TripResponse {
   endDate: Date;
   vehicleName: Date;
   allVideosStartedDate: Date;
-  videos: TripVideoResponse[]
+  videos: TripVideoResponse[];
+  highlights: TripHighlightResponse[] | null;
 }

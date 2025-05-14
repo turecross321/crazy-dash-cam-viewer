@@ -30,6 +30,10 @@ export class ApiClientService {
     return this.baseHttpUrl + "trips/" + directoryName + "/videos/" + videoLabel + "/stream";
   }
 
+  getThumbnailUrl(directoryName: string, videoLabel: string) {
+    return this.baseHttpUrl + "trips/" + directoryName + "/thumbnails/" + videoLabel;
+  }
+
   getTrip(directoryName: string): Observable<TripResponse> {
     return this.get("trips/" + directoryName);
   }

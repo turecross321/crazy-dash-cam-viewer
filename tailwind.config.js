@@ -9,6 +9,7 @@ module.exports = {
       foreground: "rgb(241, 241, 241)",
       container: "rgb(39, 39, 39)",
       containerHover: "rgb(63, 63, 63)",
+      gentle: "rgb(174,174,174)",
     },
     extend: {},
   },

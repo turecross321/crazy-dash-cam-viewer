@@ -19,7 +19,7 @@ import { TripResponse } from '../../models/trip-response';
 import {HasTimestamp, Location, NumberWithTimestamp, TripEventsResponse} from "../../models/trip-events-response";
 import {TripGaugeComponent} from "../../components/trip-gauge/trip-gauge.component";
 import {TripMapComponent} from "../../components/trip-map/trip-map.component";
-
+import {formatMilliseconds} from "../../helpers/formatting-helper";
 @Component({
   selector: 'app-trip-viewer-page',
   standalone: true,
@@ -85,6 +85,24 @@ export class TripViewerPageComponent {
     });
   }
 
+  getSliderTrackStyle(): string {
+    const highlights = [
+      { start: 5000, end: 7000 }, // in ms
+      { start: 12000, end: 15000 },
+    ];
+
+    const total = this.tripLength;
+    const stops = highlights.map(h => {
+      const startPercent = (h.start / total) * 100;
+      const endPercent = (h.end / total) * 100;
+      return `#facc15 ${startPercent}%, #facc15 ${endPercent}%`;
+    });
+
+    const base = `#e5e7eb 0%, ${stops.join(', ')}, #e5e7eb 100%`;
+    console.log(`linear-gradient(to right, ${base})`);
+    return `linear-gradient(to right, ${base})`;
+  }
+
   formatDate(date: Date): string {
     return new Intl.DateTimeFormat("en-US", {
       weekday: "long",  // Full day name (e.g., "Monday")
@@ -107,19 +125,6 @@ export class TripViewerPageComponent {
     const date = new Date();
     date.setTime(time);
     return date;
-  }
-
-  formatMilliseconds(ms: number): string {
-    const totalSeconds = Math.floor(ms / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    } else {
-      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    }
   }
 
 
@@ -268,4 +273,5 @@ export class TripViewerPageComponent {
   protected readonly faGamepad = faGamepad;
   protected readonly faGears = faGears;
   protected readonly parseInt = parseInt;
+  protected readonly formatMilliseconds = formatMilliseconds;
 }
