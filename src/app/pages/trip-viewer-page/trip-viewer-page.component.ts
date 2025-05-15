@@ -1,8 +1,9 @@
 import {Component, ElementRef, HostListener, QueryList, ViewChildren} from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
-  faBars,
-  faCar,
+  faArrowLeft,
+  faBars, faCalendar,
+  faCar, faCaretRight,
   faClock,
   faDownload, faGamepad, faGasPump,
   faGaugeHigh, faGears,
@@ -14,7 +15,7 @@ import {
   faVideoCamera
 } from '@fortawesome/free-solid-svg-icons';
 import { ApiClientService } from '../../services/api-client.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { TripResponse } from '../../models/trip-response';
 import {HasTimestamp, Location, NumberWithTimestamp, TripEventsResponse} from "../../models/trip-events-response";
 import {TripGaugeComponent} from "../../components/trip-gauge/trip-gauge.component";
@@ -23,7 +24,7 @@ import {formatMilliseconds} from "../../helpers/formatting-helper";
 @Component({
   selector: 'app-trip-viewer-page',
   standalone: true,
-  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent],
+  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent, RouterLink],
   templateUrl: './trip-viewer-page.component.html',
   styleUrl: './trip-viewer-page.component.css'
 })
@@ -274,4 +275,7 @@ export class TripViewerPageComponent {
   protected readonly faGears = faGears;
   protected readonly parseInt = parseInt;
   protected readonly formatMilliseconds = formatMilliseconds;
+  protected readonly faCalendar = faCalendar;
+  protected readonly faCaretRight = faCaretRight;
+  protected readonly faArrowLeft = faArrowLeft;
 }

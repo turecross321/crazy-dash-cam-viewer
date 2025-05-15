@@ -10,6 +10,8 @@ module.exports = {
       container: "rgb(39, 39, 39)",
       containerHover: "rgb(63, 63, 63)",
       gentle: "rgb(174,174,174)",
+      button: "rgb(73,73,73)",
+      buttonHover: "rgb(85,85,85)"
     },
     extend: {},
   },

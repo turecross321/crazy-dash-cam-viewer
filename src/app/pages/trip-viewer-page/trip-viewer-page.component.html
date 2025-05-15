@@ -3,16 +3,19 @@
   <fa-icon class="animate-spin mx-auto my-auto" [icon]="faSpinner"></fa-icon>
   }
   @else {
-    <div class="bg-container p-4 rounded-lg">
-      <h1 class="text-4xl font-bold">{{trip.directoryName}}</h1>
-      <p>{{formatDate(trip.startDate)}}</p>
+    <div class="bg-container p-4 rounded-lg flex flex-col gap-1">
+      <div class="flex gap-2 items-center">
+        <a class="p-2 flex items-center bg-button rounded-lg cursor-pointer transition-colors duration-250 hover:bg-buttonHover" routerLink="/"><fa-icon [icon]="faArrowLeft" [fixedWidth]="true" size="lg"></fa-icon></a>
+        <h1 class="text-4xl font-bold">{{trip.directoryName}}</h1>
+      </div>
+      <p><fa-icon [icon]="faCalendar" class="mr-1"></fa-icon> {{formatDate(trip.startDate)}} in <fa-icon [icon]="faCar" class="mx-1"></fa-icon> {{trip.vehicleName}}</p>
     </div>
 
     <div class="bg-container flex justify-center p-4 rounded-lg gap-4 flex-col lg:flex-row">
       @for (video of trip.videos; track $index) {
         <div class="flex flex-col gap-2">
           <div class="flex justify-between items-center">
-              <span class="inline-flex gap-2 items-center">
+              <span class="inline-flex gap-1 items-center">
                 <fa-icon [icon]="faVideoCamera"></fa-icon>
                 <label [for]="video.label">{{ video.label }}</label>
               </span>
