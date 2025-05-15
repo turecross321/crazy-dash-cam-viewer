@@ -5,12 +5,12 @@ import {
   faBars, faCalendar,
   faCar, faCaretRight,
   faClock,
-  faDownload, faGamepad, faGasPump,
+  faDownload, faEllipsisVertical, faFlag, faGamepad, faGasPump,
   faGaugeHigh, faGears,
   faPause,
   faPlay, faRoad,
   faRotate,
-  faSpinner,
+  faSpinner, faStar,
   faTachometer, faTemperature0,
   faVideoCamera
 } from '@fortawesome/free-solid-svg-icons';
@@ -21,10 +21,11 @@ import {HasTimestamp, Location, NumberWithTimestamp, TripEventsResponse} from ".
 import {TripGaugeComponent} from "../../components/trip-gauge/trip-gauge.component";
 import {TripMapComponent} from "../../components/trip-map/trip-map.component";
 import {formatMilliseconds} from "../../helpers/formatting-helper";
+import {ButtonComponent} from "../../components/button/button.component";
 @Component({
   selector: 'app-trip-viewer-page',
   standalone: true,
-  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent, RouterLink],
+  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent, RouterLink, ButtonComponent],
   templateUrl: './trip-viewer-page.component.html',
   styleUrl: './trip-viewer-page.component.css'
 })
@@ -118,7 +119,7 @@ export class TripViewerPageComponent {
   }
 
   getMsFromDate(date: Date) {
-    return date.getTime() - this.playbackStartDate().getTime();
+    return new Date(date).getTime() - this.playbackStartDate().getTime();
   }
 
   getDateFromMs(ms : number): Date {
@@ -260,7 +261,6 @@ export class TripViewerPageComponent {
 
   protected readonly faVideoCamera = faVideoCamera;
   protected readonly faGaugeHigh = faGaugeHigh;
-  protected readonly faRotate = faRotate;
   protected readonly faPlay = faPlay;
   protected readonly faPause = faPause;
   protected readonly faDownload = faDownload;
@@ -269,13 +269,11 @@ export class TripViewerPageComponent {
   protected readonly faGasPump = faGasPump;
   protected readonly faClock = faClock;
   protected readonly faCar = faCar;
-  protected readonly faRoad = faRoad;
-  protected readonly faBars = faBars;
   protected readonly faGamepad = faGamepad;
-  protected readonly faGears = faGears;
   protected readonly parseInt = parseInt;
   protected readonly formatMilliseconds = formatMilliseconds;
   protected readonly faCalendar = faCalendar;
-  protected readonly faCaretRight = faCaretRight;
   protected readonly faArrowLeft = faArrowLeft;
+  protected readonly faEllipsisVertical = faEllipsisVertical;
+  protected readonly faFlag = faFlag;
 }

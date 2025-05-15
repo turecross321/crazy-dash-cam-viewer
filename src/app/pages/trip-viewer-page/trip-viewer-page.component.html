@@ -4,14 +4,21 @@
   }
   @else {
     <div class="bg-container p-4 rounded-lg flex flex-col gap-1">
-      <div class="flex gap-2 items-center">
-        <a class="p-2 flex items-center bg-button rounded-lg cursor-pointer transition-colors duration-250 hover:bg-buttonHover" routerLink="/"><fa-icon [icon]="faArrowLeft" [fixedWidth]="true" size="lg"></fa-icon></a>
-        <h1 class="text-4xl font-bold">{{trip.directoryName}}</h1>
+      <div class="flex gap-2 items-center flex-col lg:flex-row">
+        <div class="flex w-full lg:w-min justify-between lg:justify-start">
+          <a routerLink="/"><app-button [icon]="faArrowLeft"></app-button></a>
+          <app-button [icon]="faEllipsisVertical" class="lg:hidden"></app-button> <!-- only shown when less than lg -->
+        </div>
+        <h1 class="text-4xl font-bold w-full">{{trip.directoryName}}</h1>
+        <div class="grow justify-end gap-2 hidden lg:flex"> <!-- only shown when lg -->
+          <app-button [icon]="faEllipsisVertical"></app-button>
+        </div>
       </div>
       <p><fa-icon [icon]="faCalendar" class="mr-1"></fa-icon> {{formatDate(trip.startDate)}} in <fa-icon [icon]="faCar" class="mx-1"></fa-icon> {{trip.vehicleName}}</p>
     </div>
 
-    <div class="bg-container flex justify-center p-4 rounded-lg gap-4 flex-col lg:flex-row">
+    <div class="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-1 gap-2 lg:h-[50vh]">
+      <div class="lg:col-span-3 col-span-1 bg-container flex justify-center p-4 rounded-lg gap-4 flex-col lg:flex-row">
       @for (video of trip.videos; track $index) {
         <div class="flex flex-col gap-2">
           <div class="flex justify-between items-center">
@@ -24,7 +31,7 @@
                 <a [href]="apiClient.getVideoDownloadUrl(trip.directoryName, video.label)"><fa-icon [icon]="faDownload"></fa-icon></a>
               </span>
           </div>
-          <video [id]="video.label" #videoElement [muted]="video.muteAutomaticallyOnPlayback" class="rounded-lg mx-auto lg:h-[300px]" (loadeddata)="syncVideos()">
+          <video [id]="video.label" #videoElement [muted]="video.muteAutomaticallyOnPlayback" class="rounded-lg mx-auto h-full" (loadeddata)="syncVideos()">
             <source
               [src]="apiClient.getVideoStreamUrl(trip.directoryName, video.label)"
               type="video/mp4"
@@ -34,6 +41,20 @@
         </div>
 
       }
+    </div>
+      <div class="bg-container flex p-4 rounded-lg gap-2 flex-col lg:h-full col-span-1 lg:max-h-full max-h-60">
+        <h2>Highlights</h2>
+        <hr>
+        <div class="grid grid-cols-1 overflow-y-auto gap-1">
+          @for (highlight of trip.highlights; track $index) {
+            <button class="flex gap-2 items-center bg-innerContainer p-4 rounded-lg" (click)="seek(getMsFromDate(highlight.date))">
+              <fa-icon [icon]="faFlag"></fa-icon>
+              <p>{{formatMilliseconds(getMsFromDate(highlight.date))}}</p>
+              <button class="ml-auto"><fa-icon [icon]="faPlay" size="lg"></fa-icon></button>
+            </button>
+          }
+        </div>
+      </div>
     </div>
 
     <div class="bg-container rounded-lg py-2 px-4 flex gap-2 items-center">
