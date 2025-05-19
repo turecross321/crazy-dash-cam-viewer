@@ -1,12 +1,12 @@
 <main class="p-4">
   <h1 class="text-4xl mb-2">Trips</h1>
 
-  <div class="grid grid-cols-1 gap-1">
+  <div class="grid grid-cols-1 gap-1 text-nowrap">
     @for (trip of trips; track $index) {
       <a [routerLink]="'/trip/' + trip.directoryName" class="bg-container p-2 rounded h-full cursor-pointer transition-colors duration-250 hover:bg-containerHover flex gap-2 items-center">
         <div class="flex gap-2">
           @for (video of trip.videos; track $index) {
-            <img [src]="httpApiClient.getThumbnailUrl(trip.directoryName, video.label)" [alt]="'Thumbnail for ' + trip.directoryName + 'camera ' + video.label" class="rounded h-12">
+            <img [src]="httpApiClient.getThumbnailUrl(trip.directoryName, video.label)" [alt]="'Thumbnail for ' + trip.directoryName + 'camera ' + video.label" class="rounded h-12" [ngClass]="$index > 0 ? 'hidden lg:block' : 'block'">
           }
         </div>
         <div class="flex justify-between grow">

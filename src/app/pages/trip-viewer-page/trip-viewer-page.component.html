@@ -53,13 +53,16 @@
       <div class="bg-container flex p-4 rounded-lg gap-2 flex-col xl:h-full col-span-1 xl:max-h-full max-h-60">
         <h2>Highlights</h2>
         <hr class="border-divider">
-        <div class="grid grid-cols-1 overflow-y-auto gap-1">
+        <div class="grid grid-cols-1 overflow-y-auto gap-1 h-full">
           @for (highlight of trip.highlights; track $index) {
-            <button class="flex gap-2 items-center bg-innerContainer p-4 rounded-lg mr-2" (click)="seek(getMsFromDate(highlight.date))">
+            <button class="flex gap-2 items-center bg-innerContainer p-4 rounded-lg mr-2 h-min" (click)="seek(getMsFromDate(highlight.date))">
               <fa-icon [icon]="faFlag"></fa-icon>
               <p>{{formatMilliseconds(getMsFromDate(highlight.date))}}</p>
               <button class="ml-auto"><fa-icon [icon]="faPlay" size="lg"></fa-icon></button>
             </button>
+          }
+          @if (trip.highlights?.length == 0) {
+            <p class="m-auto text-center">There are no highlights.</p>
           }
         </div>
       </div>

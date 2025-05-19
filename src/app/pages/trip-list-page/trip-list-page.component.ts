@@ -6,11 +6,12 @@ import {formatMilliseconds} from "../../helpers/formatting-helper";
 import {formatDistance} from "date-fns";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faEllipsisVertical, faListDots} from "@fortawesome/free-solid-svg-icons";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-trip-list-page',
   standalone: true,
-  imports: [RouterLink, FaIconComponent],
+  imports: [RouterLink, FaIconComponent, NgClass],
   templateUrl: './trip-list-page.component.html',
 })
 export class TripListPageComponent {
