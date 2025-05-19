@@ -2,16 +2,11 @@ import {Component, ElementRef, HostListener, QueryList, ViewChildren} from '@ang
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faArrowLeft,
-  faBars, faCalendar,
-  faCar, faCaretRight,
-  faClock,
+  faCalendar,
+  faCar, faClock,
   faDownload, faEllipsisVertical, faFlag, faGamepad, faGasPump,
-  faGaugeHigh, faGears,
-  faPause,
-  faPlay, faRoad,
-  faRotate,
-  faSpinner, faStar,
-  faTachometer, faTemperature0,
+  faGaugeHigh, faPause,
+  faPlay, faSpinner, faTachometer, faTemperature0,
   faVideoCamera
 } from '@fortawesome/free-solid-svg-icons';
 import { ApiClientService } from '../../services/api-client.service';
@@ -22,10 +17,11 @@ import {TripGaugeComponent} from "../../components/trip-gauge/trip-gauge.compone
 import {TripMapComponent} from "../../components/trip-map/trip-map.component";
 import {formatMilliseconds} from "../../helpers/formatting-helper";
 import {ButtonComponent} from "../../components/button/button.component";
+import {NgClass} from "@angular/common";
 @Component({
   selector: 'app-trip-viewer-page',
   standalone: true,
-  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent, RouterLink, ButtonComponent],
+  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent, RouterLink, ButtonComponent, NgClass],
   templateUrl: './trip-viewer-page.component.html',
   styleUrl: './trip-viewer-page.component.css'
 })
@@ -85,24 +81,6 @@ export class TripViewerPageComponent {
         this.apiClient.closeTripEvents();
       });
     });
-  }
-
-  getSliderTrackStyle(): string {
-    const highlights = [
-      { start: 5000, end: 7000 }, // in ms
-      { start: 12000, end: 15000 },
-    ];
-
-    const total = this.tripLength;
-    const stops = highlights.map(h => {
-      const startPercent = (h.start / total) * 100;
-      const endPercent = (h.end / total) * 100;
-      return `#facc15 ${startPercent}%, #facc15 ${endPercent}%`;
-    });
-
-    const base = `#e5e7eb 0%, ${stops.join(', ')}, #e5e7eb 100%`;
-    console.log(`linear-gradient(to right, ${base})`);
-    return `linear-gradient(to right, ${base})`;
   }
 
   formatDate(date: Date): string {

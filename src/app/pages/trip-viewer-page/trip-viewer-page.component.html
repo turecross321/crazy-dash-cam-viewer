@@ -17,8 +17,8 @@
       <p><fa-icon [icon]="faCalendar" class="mr-1"></fa-icon> {{formatDate(trip.startDate)}} in <fa-icon [icon]="faCar" class="mx-1"></fa-icon> {{trip.vehicleName}}</p>
     </div>
 
-    <div class="flex flex-col lg:grid lg:grid-cols-4 lg:grid-rows-1 gap-2 lg:h-[50vh]">
-      <div class="lg:col-span-3 col-span-1 bg-container flex justify-center p-4 rounded-lg gap-4 flex-col lg:flex-row">
+    <div class="flex flex-col xl:grid xl:grid-cols-4 xl:grid-rows-1 gap-2">
+      <div class="xl:col-span-3 col-span-1 bg-container grid justify-center p-4 rounded-lg gap-4 flex-col xl:flex-row overflow-y-auto" [ngClass]="trip.videos.length > 1 ? 'grid-cols-2' : 'grid-cols-1'">
       @for (video of trip.videos; track $index) {
         <div class="flex flex-col gap-2">
           <div class="flex justify-between items-center">
@@ -42,12 +42,12 @@
 
       }
     </div>
-      <div class="bg-container flex p-4 rounded-lg gap-2 flex-col lg:h-full col-span-1 lg:max-h-full max-h-60">
+      <div class="bg-container flex p-4 rounded-lg gap-2 flex-col xl:h-full col-span-1 xl:max-h-full max-h-60">
         <h2>Highlights</h2>
         <hr>
         <div class="grid grid-cols-1 overflow-y-auto gap-1">
           @for (highlight of trip.highlights; track $index) {
-            <button class="flex gap-2 items-center bg-innerContainer p-4 rounded-lg" (click)="seek(getMsFromDate(highlight.date))">
+            <button class="flex gap-2 items-center bg-innerContainer p-4 rounded-lg mr-2" (click)="seek(getMsFromDate(highlight.date))">
               <fa-icon [icon]="faFlag"></fa-icon>
               <p>{{formatMilliseconds(getMsFromDate(highlight.date))}}</p>
               <button class="ml-auto"><fa-icon [icon]="faPlay" size="lg"></fa-icon></button>
