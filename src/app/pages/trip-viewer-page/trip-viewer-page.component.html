@@ -7,18 +7,26 @@
       <div class="flex gap-2 items-center flex-col lg:flex-row">
         <div class="flex w-full lg:w-min justify-between lg:justify-start">
           <a routerLink="/"><app-button [icon]="faArrowLeft"></app-button></a>
-          <app-button [icon]="faEllipsisVertical" class="lg:hidden"></app-button> <!-- only shown when less than lg -->
+          <app-button [icon]="faEllipsisVertical" class="lg:hidden" (click)="toggleMenu()"></app-button> <!-- only shown when less than lg -->
+          @if (showingMenu) {
+            <div class="absolute top-[72px] lg:hidden right-8 left-8">
+              <app-trip-viewer-menu class="w-full" (clickOutside)="closeMenu()"></app-trip-viewer-menu>
+            </div>
+          }
         </div>
         <h1 class="text-4xl font-bold w-full">{{trip.directoryName}}</h1>
         <div class="grow justify-end gap-2 hidden lg:flex"> <!-- only shown when lg -->
-          <app-button [icon]="faEllipsisVertical"></app-button>
+          <app-button [icon]="faEllipsisVertical" (click)="toggleMenu()"></app-button>
+          @if (showingMenu) {
+            <app-trip-viewer-menu class="absolute top-[72px]" (clickOutside)="closeMenu()"></app-trip-viewer-menu>
+          }
         </div>
       </div>
       <p><fa-icon [icon]="faCalendar" class="mr-1"></fa-icon> {{formatDate(trip.startDate)}} in <fa-icon [icon]="faCar" class="mx-1"></fa-icon> {{trip.vehicleName}}</p>
     </div>
 
     <div class="flex flex-col xl:grid xl:grid-cols-4 xl:grid-rows-1 gap-2">
-      <div class="xl:col-span-3 col-span-1 bg-container grid justify-center p-4 rounded-lg gap-4 flex-col xl:flex-row overflow-y-auto" [ngClass]="trip.videos.length > 1 ? 'grid-cols-2' : 'grid-cols-1'">
+      <div class="xl:col-span-3 col-span-1 bg-container grid justify-center p-4 rounded-lg gap-4 flex-col xl:flex-row overflow-y-auto" [ngClass]="trip.videos.length > 1 ? 'xl:grid-cols-2' : 'grid-cols-1'">
       @for (video of trip.videos; track $index) {
         <div class="flex flex-col gap-2">
           <div class="flex justify-between items-center">
@@ -44,7 +52,7 @@
     </div>
       <div class="bg-container flex p-4 rounded-lg gap-2 flex-col xl:h-full col-span-1 xl:max-h-full max-h-60">
         <h2>Highlights</h2>
-        <hr>
+        <hr class="border-divider">
         <div class="grid grid-cols-1 overflow-y-auto gap-1">
           @for (highlight of trip.highlights; track $index) {
             <button class="flex gap-2 items-center bg-innerContainer p-4 rounded-lg mr-2" (click)="seek(getMsFromDate(highlight.date))">

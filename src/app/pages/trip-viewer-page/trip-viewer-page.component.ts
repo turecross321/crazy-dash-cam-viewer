@@ -18,16 +18,20 @@ import {TripMapComponent} from "../../components/trip-map/trip-map.component";
 import {formatMilliseconds} from "../../helpers/formatting-helper";
 import {ButtonComponent} from "../../components/button/button.component";
 import {NgClass} from "@angular/common";
+import {MenuComponent} from "../../components/menu/menu.component";
+import {TripViewerMenuComponent} from "../../components/trip-viewer-menu/trip-viewer-menu.component";
+import {ClickOutsideDirective} from "../../directives/click-outside.directive";
 @Component({
   selector: 'app-trip-viewer-page',
   standalone: true,
-  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent, RouterLink, ButtonComponent, NgClass],
+  imports: [FontAwesomeModule, TripGaugeComponent, TripMapComponent, RouterLink, ButtonComponent, NgClass, MenuComponent, TripViewerMenuComponent, ClickOutsideDirective],
   templateUrl: './trip-viewer-page.component.html',
   styleUrl: './trip-viewer-page.component.css'
 })
 export class TripViewerPageComponent {
   faSpinner = faSpinner;
   trip: TripResponse | null = null;
+  showingMenu: boolean = false;
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -51,7 +55,6 @@ export class TripViewerPageComponent {
     }
   }
 
-  eventTimeSpanMs = 60 * 1000; // 1 minute
   tripLength: number = 0;
   current: number = 0;
   playing: boolean = false;
@@ -235,6 +238,14 @@ export class TripViewerPageComponent {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
+  }
+
+  toggleMenu() {
+    this.showingMenu = !this.showingMenu;
+  }
+
+  closeMenu() {
+    this.showingMenu = false;
   }
 
   protected readonly faVideoCamera = faVideoCamera;

@@ -1,0 +1,6 @@
+<button class="flex items-center bg-innerContainer rounded-lg cursor-pointer transition-colors duration-250 hover:bg-buttonHover gap-1 p-2 w-full">
+  <fa-icon [icon]="icon" [fixedWidth]="true" size="lg"></fa-icon>
+  @if (label) {
+    <span>{{label}}</span>
+  }
+</button>

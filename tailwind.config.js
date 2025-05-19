@@ -12,7 +12,9 @@ module.exports = {
       innerContainer: "rgb(29, 29, 29)",
       gentle: "rgb(174,174,174)",
       button: "rgb(73,73,73)",
-      buttonHover: "rgb(85,85,85)"
+      buttonHover: "rgb(85,85,85)",
+      dangerous: "rgb(220, 38, 38)",
+      divider: "rgb(64, 64, 64)",
     },
     extend: {},
   },
