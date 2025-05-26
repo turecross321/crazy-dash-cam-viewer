@@ -38,8 +38,8 @@ export class ApiClientService {
     return this.get("trips/" + directoryName);
   }
 
-  getTrips(): Observable<PaginatedList<TripResponse>> {
-    return this.get("trips?take=100"); // todo: fix pagination
+  getTrips(take: number, skip: number): Observable<PaginatedList<TripResponse>> {
+    return this.get(`trips?take=${take}&skip=${skip}`);
   }
 
   connectToTripEvents(directoryName: string) {

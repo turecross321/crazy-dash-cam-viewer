@@ -1,5 +1,7 @@
 <button class="p-2 flex items-center bg-button rounded-lg cursor-pointer transition-colors duration-250 hover:bg-buttonHover gap-1">
-  <fa-icon [icon]="icon" [fixedWidth]="true" size="lg"></fa-icon>
+  @if (icon) {
+    <fa-icon [icon]="icon" [fixedWidth]="true" size="lg"></fa-icon>
+  }
   @if (label) {
     <span>{{label}}</span>
   }

@@ -13,6 +13,6 @@ import {RouterLink} from "@angular/router";
   templateUrl: './button.component.html',
 })
 export class ButtonComponent {
-  @Input() icon: IconDefinition = faPoo;
+  @Input() icon: IconDefinition | null = faPoo;
   @Input() label: string | null = null;
 }

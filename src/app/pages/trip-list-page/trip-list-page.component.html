@@ -2,7 +2,7 @@
   <h1 class="text-4xl mb-2">Trips</h1>
 
   <div class="grid grid-cols-1 gap-1 text-nowrap">
-    @for (trip of trips; track $index) {
+    @for (trip of tripList?.items; track $index) {
       <a [routerLink]="'/trip/' + trip.directoryName" class="bg-container p-2 rounded h-full cursor-pointer transition-colors duration-250 hover:bg-containerHover flex gap-2 items-center">
         <div class="flex gap-2">
           @for (video of trip.videos; track $index) {
@@ -21,6 +21,19 @@
           </div>
         </div>
       </a>
+    }
+  </div>
+  <div class="flex gap-2 w-min mt-2 mx-auto">
+    @if (currentPage > 0) {
+      <app-page-select-button [icon]="faCaretLeft" (click)="goToPage(currentPage - 1)"></app-page-select-button>
+    }
+
+    @for (page of getPageButtonNumbers(); track $index) {
+      <app-page-select-button [label]="(page + 1).toString()" [selected]="page == currentPage" (click)="goToPage(page)"></app-page-select-button>
+    }
+
+    @if (currentPage + 1 != getTotalPages()) {
+      <app-page-select-button [icon]="faCaretRight" (click)="goToPage(currentPage + 1)" ></app-page-select-button>
     }
   </div>
 </main>
